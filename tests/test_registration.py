@@ -1,6 +1,8 @@
 from playwright.sync_api import sync_playwright, expect
+import pytest
 
-
+@pytest.mark.regression  # Добавили маркировку regression
+@pytest.mark.registration
 def test_successful_registration():  # Создаем тестовую функцию
     # Все остальные действия остаются без изменений
     with sync_playwright() as playwright:
