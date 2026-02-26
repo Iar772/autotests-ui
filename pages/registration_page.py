@@ -8,7 +8,7 @@ class RegistrationPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 
-        self.registration_form = RegistrationFormComponent(page, 'registration-form')
+        self.registration_form = RegistrationFormComponent(page)
         self.registration_button = page.get_by_test_id('registration-page-registration-button')
 
     def click_registration_button(self):
