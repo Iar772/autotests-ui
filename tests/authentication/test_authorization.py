@@ -17,6 +17,9 @@ from tools.allure.tags import AllureTag
 @allure.epic(AllureEpic.LMS)
 @allure.feature(AllureFeature.AUTHENTICATION)
 @allure.story(AllureStory.AUTHORIZATION)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.AUTHENTICATION)
+@allure.sub_suite(AllureStory.AUTHORIZATION)
 class TestAuthorization:
 
     @allure.tag(AllureTag.USER_LOGIN)
@@ -45,6 +48,14 @@ class TestAuthorization:
         dashboard_page.navbar.check_visible("username")
         dashboard_page.sidebar.check_visible()
 
+    @pytest.mark.parametrize(
+        "email, password",
+        [
+            ("user.name@gmail.com", "password"),
+            ("user.name@gmail.com", "  "),
+            ("  ", "password")
+        ]
+    )
     @allure.tag(AllureTag.USER_LOGIN)
     @allure.title("User login with wrong email or password")
     @allure.severity(Severity.CRITICAL)
