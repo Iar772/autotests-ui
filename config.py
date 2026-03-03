@@ -53,3 +53,7 @@ class Settings(BaseSettings):
             tracing_dir=tracing_dir,
             browser_state_file=browser_state_file
         )
+
+
+# Инициализируем настройки
+settings = Settings.initialize()
