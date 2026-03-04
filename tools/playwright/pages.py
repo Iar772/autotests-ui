@@ -6,14 +6,18 @@ from config import settings  # Импортируем настройки
 
 
 def initialize_playwright_page(
-        playwright: Playwright,
-        test_name: str,
-        storage_state: str | None = None
+    playwright: Playwright,
+    test_name: str,
+    storage_state: str | None = None,
 ) -> Page:
     # Используем settings.headless
     browser = playwright.chromium.launch(headless=settings.headless)
     # Используем settings.videos_dir
-    context = browser.new_context(storage_state=storage_state, record_video_dir=settings.videos_dir)
+    context = browser.new_context(
+        base_url=settings.get_base_url(),
+        storage_state=storage_state,
+        record_video_dir=settings.videos_dir
+    )
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
 

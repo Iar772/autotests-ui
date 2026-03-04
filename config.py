@@ -23,6 +23,7 @@ class TestData(BaseModel):
 
 
 class Settings(BaseSettings):
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -36,24 +37,31 @@ class Settings(BaseSettings):
     test_data: TestData
     videos_dir: DirectoryPath
     tracing_dir: DirectoryPath
+    allure_results_dir: DirectoryPath
     browser_state_file: FilePath
 
     @classmethod
     def initialize(cls) -> Self:
-        videos_dir = DirectoryPath("./videos")
-        tracing_dir = DirectoryPath("./tracing")
-        browser_state_file = FilePath("browser-state.json")
+        videos_dir = DirectoryPath('./videos')
+        tracing_dir = DirectoryPath('./tracing')
+        browser_state_file = FilePath('browser-state.json')
+        allure_results_dir = DirectoryPath('./allure-results')
+
 
         videos_dir.mkdir(exist_ok=True)
         tracing_dir.mkdir(exist_ok=True)
         browser_state_file.touch(exist_ok=True)
+        allure_results_dir.mkdir(exist_ok=True)
 
         return Settings(
-            videos_dir=videos_dir,
             tracing_dir=tracing_dir,
-            browser_state_file=browser_state_file
+            videos_dir=videos_dir,
+            allure_results_dir=allure_results_dir,
+            browser_state_file=browser_state_file,
         )
 
+    def get_base_url(self) -> str:
+        return f"{self.app_url}/"
 
-# Инициализируем настройки
-settings = Settings.initialize()
+
+settings=Settings.initialize()
